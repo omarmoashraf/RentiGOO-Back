@@ -1,0 +1,22 @@
+{
+  "name": "project-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "API/index.js",
+  "scripts": {
+    "dev": "nodemon API/index.js",
+    "start": "node API/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jwt-encode": "^1.0.1",
+    "mongoose": "^8.19.3"
+  }
+}
