@@ -1,6 +1,6 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -10,8 +10,8 @@ const DB_URL = process.env.DB_URL;
 
 mongoose
   .connect(DB_URL)
-  .then(() => console.log(" Connected to MongoDB"))
-  .catch((err) => console.error(" Error connecting to MongoDB:", err));
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
 
 app.use(express.json());
 
@@ -21,6 +21,6 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-export default app;
+module.exports = app;
