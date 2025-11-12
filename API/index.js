@@ -2,10 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+
+
 dotenv.config();
 
 const carsRouter = require("../Routes/apiCars");
-
+const usersRoutes = require("../Routes/apiusers");
 const app = express();
 
 const DB_URL = process.env.DB_URL;
@@ -18,6 +20,8 @@ mongoose
 app.use(express.json());
 
 app.use("/api/v1/cars", carsRouter);
+app.use("/api/v1/users", usersRouter);
+
 
 const PORT = process.env.PORT || 5000;
 
