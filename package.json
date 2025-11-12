@@ -5,7 +5,8 @@
   "main": "API/index.js",
   "scripts": {
     "dev": "nodemon API/index.js",
-    "start": "node API/index.js"
+    "start": "node API/index.js",
+    "seed": "node scripts/seedCars.js"
   },
   "keywords": [],
   "author": "",

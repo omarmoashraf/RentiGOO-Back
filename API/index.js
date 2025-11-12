@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const carsRouter = require("../Routes/apiCars");
+
 const app = express();
 
 const DB_URL = process.env.DB_URL;
@@ -14,6 +16,8 @@ mongoose
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
 app.use(express.json());
+
+app.use("/api/v1/cars", carsRouter);
 
 const PORT = process.env.PORT || 5000;
 
