@@ -1,9 +1,9 @@
 const user = require('../../Models/user');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require("jwt-encode")
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const users = await user.findOne({ email: email } , '+password');
+  const users = await user.findOne({ email });
   if (!users) {
     return res.status(404).json({ message: "User not found" });
   }
@@ -17,6 +17,7 @@ const login = async (req, res) => {
       id: users._id,
       name: users.name,
       email: users.email,
+      role: users.role,
     },
     process.env.SECRET_KEY
   );
