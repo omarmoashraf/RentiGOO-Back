@@ -1,4 +1,3 @@
-// checkRole.js & ensures the user has the require role
 const checkRole = (requiredRole) => {
   return (req, res, next) => {
     if (!req.user || !req.user.role) {
@@ -15,7 +14,7 @@ const checkRole = (requiredRole) => {
       });
     }
 
-    next(); // role matches
+    next();
   };
 };
 
