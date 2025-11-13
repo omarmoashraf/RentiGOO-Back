@@ -1,12 +1,10 @@
-// routes/apiusers.js
 const express = require("express");
 const addUser = require("../Controllers/Users/Adduser");
-const getAllUser = require("../Controllers/Users/getAllUser");
-const getSingleUser = require("../Controllers/Users/getSingleUser");
+const getAllUser = require("../Controllers/Users/getAlluser"); 
+const getSingleUser = require("../Controllers/Users/getSingleuser"); 
 const updateUser = require("../Controllers/Users/Updateuser");
 const deleteUser = require("../Controllers/Users/Deleteuser");
 
-// Import middlewares from the merged auth.js
 const { checkLogin, checkRole } = require("../MiddleWares/checklogin");
 
 const router = express.Router();
