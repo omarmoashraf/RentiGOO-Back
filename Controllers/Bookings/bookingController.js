@@ -1,4 +1,4 @@
-import Booking from "../../Models/bookingModel";
+const Booking = require("../../Models/bookingModel");
 const createBooking = async (req, res, next) => {
   try {
     const { user, car, startDate, endDate, totalPrice } = req.body;
