@@ -7,6 +7,7 @@ dotenv.config();
 const carsRouter = require("../Routes/apiCars");
 const usersRoutes = require("../Routes/apiusers");
 const bookingRoutes = require("../Routes/bookingRoutes");
+const authRoutes = require("../Routes/auth/auth");
 const app = express();
 
 const DB_URL = process.env.DB_URL;
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/v1/cars", carsRouter);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/bookings", bookingRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
@@ -28,6 +30,6 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports = app;
