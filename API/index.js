@@ -20,7 +20,7 @@ mongoose
 app.use(express.json());
 
 app.use("/api/v1/cars", carsRouter);
-app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/users", usersRoutes);
 
 
 const PORT = process.env.PORT || 5000;
