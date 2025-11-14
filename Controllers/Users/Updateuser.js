@@ -5,6 +5,10 @@ const updateUser = async (req, res) => {
     const { id } = req.params;  // user ID from URL
     const { name, email, password } = req.body;
 
+        if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields are Required" });
+    }
+    
     const updatedUser = await User.findByIdAndUpdate(
       id,
       { name, email, password }, // fields to update

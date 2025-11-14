@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt");
 const signup = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields are Required" });
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
