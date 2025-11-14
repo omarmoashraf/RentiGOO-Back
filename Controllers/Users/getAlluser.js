@@ -2,7 +2,7 @@ const User = require("../../Models/user");
 
 const getAllUser = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find({},{__v:0},{password:0});
     res.status(200).json({
       message: "All users fetched successfully",
       data: users,

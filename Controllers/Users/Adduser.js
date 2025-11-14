@@ -1,7 +1,12 @@
 const User = require("../../Models/user");
+const bcrypt=require("bcrypt")
 const addUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are Required" });
+    }
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -10,12 +15,13 @@ const addUser = async (req, res) => {
         data: null,
       });
     }
+    const dashed_pass=await bcrypt.hash(password,10)
 
     // Create new user
     const newUser = new User({
       name,
       email,
-      password,
+      password:dashed_pass,
       role,
     });
 
@@ -23,7 +29,10 @@ const addUser = async (req, res) => {
 
     res.status(201).json({
       message: "User added successfully",
-      data: newUser,
+      data: {
+        id:newUser.name,
+        email:newUser.email,
+      },
     });
   } catch (error) {
     console.error("Error adding user:", error);
