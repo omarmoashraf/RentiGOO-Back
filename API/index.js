@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -9,6 +10,24 @@ const carsRouter = require("../Routes/apiCars");
 const app = express();
 
 const DB_URL = process.env.DB_URL;
+
+const allowOrigins = [
+  "http://localhost:5174/",
+  "https://renti-goo.vercel.app/",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (allowOrigins.find(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(null, false);
+      }
+    },
+    credentials: true,
+  })
+);
 
 mongoose
   .connect(DB_URL)
