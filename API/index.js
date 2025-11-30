@@ -12,7 +12,7 @@ const app = express();
 const DB_URL = process.env.DB_URL;
 
 const allowOrigins = [
-  "http://localhost:5174/",
+  "http://localhost:5173/",
   "https://renti-goo.vercel.app/",
 ];
 
