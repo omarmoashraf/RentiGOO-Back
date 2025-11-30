@@ -11,18 +11,27 @@ const app = express();
 
 const DB_URL = process.env.DB_URL;
 
-const allowOrigins = ["http://localhost:5173", "https://renti-goo.vercel.app"];
+const allowOrigins = ["https://renti-goo.vercel.app"];
 
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log("CORS origin:", origin);
+
       if (!origin) return callback(null, true);
+
+      try {
+        const url = new URL(origin);
+        if (url.hostname === "localhost") {
+          return callback(null, true);
+        }
+      } catch (e) {}
 
       if (allowOrigins.includes(origin)) {
         return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"), false);
       }
+
+      return callback(null, false);
     },
     credentials: true,
   })
