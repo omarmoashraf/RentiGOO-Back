@@ -11,29 +11,29 @@ const app = express();
 
 const DB_URL = process.env.DB_URL;
 
-const allowOrigins = ["https://renti-goo.vercel.app"];
+const allowOrigins = new Set(["https://renti-goo.vercel.app"]);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      console.log("CORS origin:", origin);
-
       if (!origin) return callback(null, true);
 
       try {
         const url = new URL(origin);
-        if (url.hostname === "localhost") {
+        if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+          return callback(null, true);
+        }
+        if (url.hostname.endsWith(".vercel.app")) {
           return callback(null, true);
         }
       } catch (e) {}
 
-      if (allowOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+      if (allowOrigins.has(origin)) return callback(null, true);
 
-      return callback(null, false);
+      return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
+    optionsSuccessStatus: 200,
   })
 );
 
