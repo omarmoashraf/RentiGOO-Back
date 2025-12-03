@@ -14,7 +14,7 @@ const checkLogin = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+   const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // decoded should include id and role
     next();
   } catch (err) {
