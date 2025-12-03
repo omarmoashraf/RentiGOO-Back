@@ -1,4 +1,4 @@
-const User = require('../../Models/user');
+const User = require('../../Models/user'); 
 const bcrypt = require('bcrypt');
 const jwt = require("jwt-encode");
 
@@ -10,7 +10,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Email and password are required" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }); 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -20,25 +20,25 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    const token = jwt(
-      {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-      process.env.SECRET_KEY
-    );
+  
+    if (!process.env.SECRET_KEY) {
+      console.error("SECRET_KEY is not defined in env variables");
+      return res.status(500).json({ message: "Server misconfiguration" });
+    }
+
+    const payload = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
+    const token = jwt(payload, process.env.SECRET_KEY);
 
     res.status(200).json({
       message: "Login successful",
-      token,         
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      token,
+      user: payload, // safer to return plain object
     });
   } catch (err) {
     console.error("Login error:", err);
