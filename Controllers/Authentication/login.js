@@ -1,6 +1,6 @@
 const User = require("../../Models/user");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken"); // standard JWT package
+const jwt = require("jsonwebtoken"); // standard package
 
 const login = async (req, res) => {
   try {
@@ -11,30 +11,26 @@ const login = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid password" });
-    }
+    if (!isPasswordValid) return res.status(401).json({ message: "Invalid password" });
 
     // Generate JWT token
     const token = jwt.sign(
       {
         id: user._id,
-        username: user.username || user.name, // fallback if name exists
+        username: user.username || user.name,
         email: user.email,
         role: user.role,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "7d" } // token valid for 7 days
+      { expiresIn: "7d" }
     );
 
     res.status(200).json({
       message: "Login successful",
-      token,
+      token, // send token
       user: {
         id: user._id,
         username: user.username || user.name,
