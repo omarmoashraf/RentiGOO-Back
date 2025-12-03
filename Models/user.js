@@ -25,4 +25,4 @@ const userSchema = new mongoose.Schema(
     timestamps: true, // Automatic creates createdAt and updatedAt
   }
 );
-module.exports = mongoose.model("users", userSchema); //user in mongoose the same name
+module.exports = mongoose.model("User", userSchema);
