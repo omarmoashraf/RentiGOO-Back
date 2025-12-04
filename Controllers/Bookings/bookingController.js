@@ -1,11 +1,24 @@
 const Booking = require("../../Models/bookingModel");
+const Car = require("../../Models/cars");
 const createBooking = async (req, res, next) => {
   try {
     const { user, car, startDate, endDate, totalPrice } = req.body;
 
+    // Resolve car to ObjectId if externalId was sent (e.g., "1", "10")
+    let carId = car;
+    if (typeof car === "string" && car.length !== 24) {
+      const foundCar = await Car.findOne({ externalId: car }).select("_id");
+      if (!foundCar) {
+        return res
+          .status(400)
+          .json({ message: "Invalid car reference provided" });
+      }
+      carId = foundCar._id;
+    }
+
     const booking = await Booking.create({
       user,
-      car,
+      car: carId,
       startDate,
       endDate,
       totalPrice,
